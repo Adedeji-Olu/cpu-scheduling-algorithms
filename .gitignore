@@ -29,3 +29,7 @@ test_results/
 
 # Don't ignore .github (we need it for CI/CD)
 !.github/
+
+# Allow presentation files
+!presentation/*.pdf
+!presentation/*.pptx

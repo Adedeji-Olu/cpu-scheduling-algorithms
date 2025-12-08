@@ -238,6 +238,7 @@ This is an academic project. For questions or suggestions, please open an issue.
 
 ---
 
-**Course:** Advanced Operating Systems  
-**Institution:** [Your University]  
+**Course:** Operating Systems  
+**Instructor:** Prof. Alfa Anyadoro  
+**Institution:** Bowie State University 
 **Semester:** Fall 2025

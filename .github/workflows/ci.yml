@@ -46,5 +46,6 @@ jobs:
     
     - name: Check for syntax errors
       run: |
-        find src include tests -name "*.cpp" -o -name "*.h" | \
+        # Only check C++ source files, skip binary files
+        find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) | \
         xargs -I {} sh -c 'echo "Checking {}..." && c++ -std=c++17 -fsyntax-only -Iinclude {}'

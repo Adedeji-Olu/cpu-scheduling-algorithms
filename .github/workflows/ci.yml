@@ -1,0 +1,50 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libgtest-dev cmake
+        cd /usr/src/gtest
+        sudo cmake .
+        sudo make
+        sudo cp lib/*.a /usr/lib
+    
+    - name: Build project
+      run: make build
+    
+    - name: Run unit tests
+      run: make unit-test
+    
+    - name: Run system tests
+      run: make system-test
+    
+    - name: Check code compilation
+      run: make clean && make build
+
+  lint:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check for syntax errors
+      run: |
+        find src include tests -name "*.cpp" -o -name "*.h" | \
+        xargs -I {} sh -c 'echo "Checking {}..." && c++ -std=c++17 -fsyntax-only -Iinclude {}'
